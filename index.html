@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Data Visualizer</title>
+    <style>
+      body{font-family:Arial, sans-serif; max-width:1000px; margin:20px auto;}
+      header{text-align:center; margin-bottom:1rem;}
+      form{margin-bottom:1rem;}
+      label {display:inline-block;width:140px;}
+      select,input[type=date] {margin-bottom:8px;}
+      #chart{border:1px solid #eee; padding:8px;}
+      .error {color:darkred;}
+    </style>
+  </head>
+  <body>
+    <header><h1>Stock Data Visualizer</h1></header>
+    <form method="post">
+      <div>
+        <label for="symbol">Choose Symbol:</label>
+        <select name="symbol" id="symbol">
+          <option value="">-- Select --</option>
+          {%for s in symbols%}
+            <option value="{{ s }}">{{s}}</option>
+          {%endfor%}
+        </select>
+      </div>
+      <div>
+        <label for="chart_type">Choose Chart Type:</label>
+        <select name="chart_type" id="chart_type">
+          <option value="line">Line</option>
+          <option value="bar">Bar</option>
+        </select>
+      </div>
+      <div>
+        <label for="time_series">Choose Time Series:</label>
+        <select name="time_series" id="time_series">
+          <option value="intraday">Intraday (60min)</option>
+          <option value="daily" selected>Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
+      <div>
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date">
+      </div>
+      <div>
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date">
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    {%if error%}
+      <div class="error">{{ error}}</div>
+    {% endif%}
+    {% if chart_svg%}
+      <div id="chart">{{ chart_svg|safe}}</div>
+    {% endif%}
+  </body>
+</html>
+```
